@@ -1,0 +1,20 @@
+# This allows you to turn-on processes in Foreman instead of turning them off when running only part of the stack
+# See https://github.com/JordanHatch/bowler for some more info
+
+dependency :static
+
+process :frontend => [:publisher, :panopticon, :imminence]
+process :publisher => :panopticon
+process :panopticon
+process :imminence
+process :needotron
+process :rummager => :panopticon
+process :smartanswers => :imminence
+process :calendars
+process :planner
+process :jobs
+process :fco
+process :'contact-o-tron'
+process :licencefinder
+process :migratorator
+process :signonotron2

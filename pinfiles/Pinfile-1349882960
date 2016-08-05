@@ -1,0 +1,35 @@
+# This allows you to turn-on processes in Foreman instead of turning them off when running only part of the stack
+# See https://github.com/JordanHatch/bowler for some more info
+
+#dependency :static
+process :static
+
+process :frontend => [:static, :publisher, :contentapi, :imminence]
+process :publisher => :panopticon
+process :panopticon
+process :imminence => [:static]
+process :needotron
+process :rummager
+process :smartanswers => [:static, :contentapi, :imminence]
+process :calendars => [:static, :contentapi]
+process :planner => [:static, :contentapi]
+process :jobs
+process :fco
+process :'contact-o-tron'
+process :licencefinder => [:static, :contentapi, :publisher]
+process :migratorator
+process :signonotron2
+process :tradetariff => [:tradetariffapi, :static, :contentapi]
+process :tradetariffapi
+process :efg
+process :whitehall => :static
+process :reviewomatic => :migratorator
+process :reviewomaticexplore => :reviewomatic
+process :contentapi
+process :designprinciples => :static
+process :businesssupportfinder => [:static, :contentapi, :imminence]
+process :feedback => [:static]
+process :errbit
+process :datainsight => [:static, :datainsight, :datainsight_narrative_exposer, :datainsight_weekly_reach_exposer, :datainsight_todays_activity_exposer, :datainsight_format_success_exposer]
+process :'datainsight-exposers' => [:datainsight_narrative_exposer, :datainsight_weekly_reach_exposer, :datainsight_todays_activity_exposer, :datainsight_format_success_exposer, :datainsight_everything_exposer]
+process :'datainsight-recorders' => [:datainsight_narrative_recorder, :datainsight_weekly_reach_recorder, :datainsight_todays_activity_recorder, :datainsight_format_success_recorder, :datainsight_everything_recorder]

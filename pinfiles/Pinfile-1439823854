@@ -1,0 +1,79 @@
+# This allows you to turn-on processes in Foreman instead of turning them off when running only part of the stack
+# See https://github.com/JordanHatch/bowler for some more info
+
+process :'authenticating-proxy' => [:'government-frontend']
+process :asset_manager
+process :bouncer
+process :business_support_api => [:contentapi]
+process :businesssupportfinder => [:static, :contentapi, :business_support_api]
+process :calculators => [:static, :contentapi]
+process :calendars => [:static, :contentapi]
+process :collections => [:static, :contentapi, :'content-store', :rummager]
+process :'collections-publisher' => [:contentapi, :panopticon, :'publishing-api', :rummager]
+process :'contacts-frontend' => [:static, :'content-store']
+process :contentapi => [:imminence, :asset_manager]
+process :'content-register'
+process :'content-store'
+process :'draft-content-store'
+process :'contact-o-tron'
+process :'courts-api' => [:'publishing-api']
+process :'courts-frontend' => [:static, :'content-store']
+process :designprinciples => :static
+process :efg
+process :'email-alert-api'
+process :'email-alert-frontend' => [:'content-store', :'email-alert-api', :static]
+process :'email-alert-service'
+process :'email-alert-monitor'
+process :errbit
+process :'event-store'
+process :fco
+process :fco_services
+process :feedback => [:static, :support, :'support-api']
+process :'finder-frontend' => [:static, :rummager, :'content-store']
+process :'finder-api'
+process :frontend => [:static, :contentapi, :rummager]
+process :'government-frontend' => [:'content-store', :static]
+process :'info-frontend' => [:static, :'metadata-api']
+process :imminence
+process :'contacts-admin' => [:rummager, :'publishing-api', :whitehall]
+process :'hmrc-manuals-api' => [:'publishing-api', :rummager]
+process :'manuals-frontend' => [:static, :'content-store']
+process :jobs
+process :licencefinder => [:static, :contentapi]
+process :maslow => :need_api
+process :'metadata-api' => [:contentapi, :need_api]
+process :migratorator
+process :need_api
+process :panopticon => [:'url-arbiter', :'router-api', :rummager]
+process :planner => [:static, :contentapi]
+process :'policy-publisher' => ['content-register', :'publishing-api', :rummager]
+process :publisher => [:panopticon, :contentapi]
+process :'publishing-api' => [:'content-store', :'router-api', :'url-arbiter']
+process :release
+process :reviewomatic => :migratorator
+process :reviewomaticexplore => :reviewomatic
+process :router
+process :'router-api'
+process :rummager
+process :'search-admin' => :rummager
+process :'short-url-manager' => [:'publishing-api']
+process :signon
+process :smartanswers => [:static, :contentapi, :imminence]
+process :'specialist-publisher' => [:panopticon, :asset_manager, :rummager, :'publishing-api', :'email-alert-api']
+process :'specialist-frontend' => [:static, :contentapi, :'content-store']
+process :static
+process :support => [:'support-api']
+process :'support-api'
+process :tariff_admin => [:tradetariffapi]
+process :tradetariff => [:tradetariffapi, :static, :contentapi]
+process :tradetariffapi
+process :transaction_wrappers => :static
+process :transition
+process :travel_advice_publisher => [:panopticon, :asset_manager]
+process :'url-arbiter'
+process :whitehall => [:'content-register', :contentapi, :static, :'publishing-api', :rummager]
+
+# pseudo process to reflect what's needed for www.dev.gov.uk to work at all
+# www.dev.gov.uk will still depend on the relevant other frontend applications being
+# started, because always starting them all would kill the dev VM.
+process :www => :router
